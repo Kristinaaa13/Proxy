@@ -1,0 +1,30 @@
+from abc import ABC, abstractmethod
+
+# Абстрактний клас Суб'єкта
+class Subject(ABC):
+    @abstractmethod
+    def request(self):
+        pass
+
+# Конкретний клас Суб'єкта
+class RealSubject(Subject):
+    def request(self):
+        return "RealSubject: Handling request."
+
+# Замісник
+class Proxy(Subject):
+    def __init__(self, real_subject):
+        self._real_subject = real_subject
+
+    def request(self):
+        # Додатковий код для обробки запиту перед передачею реальному суб'єкту
+        result = "Proxy: Logging the request.\n"
+        result += self._real_subject.request()
+        return result
+
+# Використання
+real_subject = RealSubject()
+proxy = Proxy(real_subject)
+
+result = proxy.request()
+print(result)
